@@ -10,22 +10,20 @@
     "
   >
     <div style="grid-area: 1 / 1 / 8 / 2">
-      <SideBar style="height: 100%" />
+      <SideBar style="height: 100%" :index="index" />
     </div>
     <div style="grid-area: 1 / 2 / 4 / 6; margin-top: 16px">
       <Banner style="width: 1080px" />
     </div>
     <div style="grid-area: 1 / 6 / 4 / 8; margin-top: 16px; margin-right: 12px">
-      <span style="font-size: 24px; font-weight: bold; margin-bottom: 4px"
-        >每日推荐</span
-      >
-      <div style="background-color: #fff; border-radius: 16px">
-        <RecommendSongs @event="playMusic($event)" />
+      <span style="font-size: 24px; font-weight: bold">每日推荐</span>
+      <div style="background-color: #fff; border-radius: 16px; margin-top: 4px">
+        <RecommendSongs @sendSong="play" @pauseMusic="pause" />
       </div>
     </div>
 
     <div style="grid-area: 7 / 2 / 8 / 8">
-      <audio :src="songUrl" controls="controls"></audio>
+      <audio id="audio" :src="song.url" controls="controls"></audio>
     </div>
   </div>
 </template>
@@ -45,13 +43,30 @@ export default {
   },
   data() {
     return {
-      songUrl: "",
+      index: "1-1",
+      song: {},
+      isPlaying: false,
     };
   },
+  created() {
+    this.$emit("index", this.index);
+  },
   methods: {
-    playMusic(item) {
-      console.log(item, "/////");
-      // this.songUrl = url;
+    play(data) {
+      let audio = document.querySelector("#audio");
+      this.song = data;
+      audio.load();
+      setTimeout(() => {
+        audio.play();
+      }, 150);
+
+      this.isPlaying = true;
+    },
+    pause() {
+      let audio = document.querySelector("#audio");
+
+      audio.pause();
+      this.isPlaying = false;
     },
   },
 };

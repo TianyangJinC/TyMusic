@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/login.vue";
-import Main from "../views/main.vue";
 import Recommend from "../views/recommend.vue";
+import Search from "../views/search.vue"
 
 Vue.use(VueRouter);
 
@@ -12,13 +12,13 @@ const routes = [
     name: "Login",
     component: Login
   }, {
-    path: '/main',
-    name: 'Main',
-    component: Main
-  }, {
     path: '/recommend',
     name: 'Recommend',
     component: Recommend
+  }, {
+    path: '/search',
+    name: 'Search',
+    component: Search
   }
 ];
 

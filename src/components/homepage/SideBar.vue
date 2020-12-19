@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    default-active="1-1"
+    :default-active="index"
     class="el-menu-vertical-demo"
     background-color="#fff"
     text-color="#000"
@@ -30,15 +30,27 @@
       <i class="el-icon-setting"></i>
       <span slot="title">音乐人</span>
     </el-menu-item>
+    <el-menu-item index="5" @click="goToSearch">
+      <i class="el-icon-search"></i>
+      <span slot="title">搜索</span>
+    </el-menu-item>
   </el-menu>
 </template>
 
 <script>
 export default {
+  props: {
+    index: String,
+  },
   methods: {
     goToRecommend() {
       this.$router.push({
         path: "/recommend",
+      });
+    },
+    goToSearch() {
+      this.$router.push({
+        path: "/search",
       });
     },
   },

@@ -58,7 +58,7 @@ export default {
             });
             this.$cookies.set("userCookie", response.data.cookie, 60 * 60 * 24);
             this.$router.push({
-              path: "/main",
+              path: "/recommend",
               query: {
                 profile: response.data.profile,
               },

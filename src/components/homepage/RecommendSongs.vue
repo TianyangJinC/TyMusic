@@ -14,7 +14,7 @@
           backgroundImage: 'url(' + item.pic + ')',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
-          backgroundSize: '101% 101%',
+          backgroundSize: '100% 100%',
         }"
       >
         <div class="recommendSongsDiv">
@@ -33,11 +33,12 @@
             {{ item.ar }} - {{ item.al }}
           </div>
           <img
+            v-if="!isPlaying"
             src="../../assets/play.png"
-            @click="playMusic(item)"
+            @click="sendSong(item)"
             style="cursor: pointer"
           />
-          <!-- <img src="../../assets/pause.png" @click="pauseMuisc" /> -->
+          <img v-else src="../../assets/pause.png" @click="pauseMusic" />
         </div>
       </div>
     </div>
@@ -49,6 +50,7 @@ export default {
   data() {
     return {
       recommendSongs: [],
+      isPlaying: false,
     };
   },
   created() {
@@ -89,7 +91,7 @@ export default {
       });
   },
   methods: {
-    getSongUrl: function (id) {
+    getSongUrl(id) {
       return new Promise((reslove, reject) => {
         this.$axios
           .get("http://localhost:3000/song/url", {
@@ -106,8 +108,13 @@ export default {
           });
       });
     },
-    playMusic: function (item) {
-      this.$emit("playRecommendSong", item);
+    sendSong(item) {
+      this.$emit("sendSong", item);
+      this.isPlaying = true;
+    },
+    pauseMusic() {
+      this.$emit("pause");
+      this.isPlaying = false;
     },
   },
 };
@@ -119,7 +126,7 @@ export default {
   display: flex;
   overflow: auto;
   flex: none;
-  height: 347.27px;
+  height: 343.27px;
   flex-flow: column nowrap;
 }
 
@@ -130,7 +137,7 @@ export default {
 .y.container > div {
   font-size: 24px;
   width: 100%;
-  height: 347.27px;
+  height: 343.27px;
 }
 
 .recommendSongsDiv {
